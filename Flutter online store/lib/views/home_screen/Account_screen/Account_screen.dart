@@ -24,133 +24,6 @@ import '../../../controller/profile_controller.dart';
 class Account_screen extends StatelessWidget {
   Account_screen({super.key});
 
-  setdata() async {
-    CollectionReference userreff =
-        FirebaseFirestore.instance.collection('users');
-    // first  way  to add user
-    // userreff.add({
-    //   'username': 'Abood',
-    //   'password': "123123",
-    //   'imageurl': '12',
-    //   'Email': '123@gmail.com',
-    // });
-
-    // socand way to add user
-
-    userreff.doc(FirebaseAuth.instance.currentUser!.uid).set({
-      'username': 'Abood',
-      'password': "1231234",
-      'imageurl': '12',
-      'Email': '123@gmail.com',
-    });
-  }
-
-  getdata() async {
-    await FirebaseFirestore.instance.collection('users').get().then((value) {
-      return value.docs.forEach((element) {
-        print(element.data()['username']);
-      });
-    });
-  }
-
-// real time
-  realtimeget() async {
-    FirebaseFirestore.instance.collection('users').snapshots().listen((event) {
-      event.docs.forEach((element) {
-        print(element.data()['username']);
-      });
-    });
-  }
-
-// using updata or set
-// updata updata the data you need only and if doc is not exist he will not  add it
-// set dealet all data only you want is keep and if doc is not exist he will add it
-  Updata() async {
-    CollectionReference userref =
-        FirebaseFirestore.instance.collection('users');
-    userref.doc(FirebaseAuth.instance.currentUser!.uid).update({
-      'username': 'hassan',
-      'password': "1111111",
-      'imageurl': '22',
-    }).then((value) {
-      print('Update is success');
-    }).catchError((e) {
-      print('Error : $e');
-    });
-  }
-
-  delete() async {
-    CollectionReference userref =
-        FirebaseFirestore.instance.collection('users');
-    userref.doc(FirebaseAuth.instance.currentUser!.uid).delete().then((value) {
-      print('deleate is success');
-    }).catchError((e) {
-      print('Error : $e');
-    });
-  }
-
-  // transaction all operation will done or not
-  // operration read then write
-  var userdoc = FirebaseFirestore.instance
-      .collection('users')
-      .doc(FirebaseAuth.instance.currentUser!.uid);
-  trans() async {
-    FirebaseFirestore.instance.runTransaction((transaction) async {
-      // start
-      var docsnap = await transaction.get(userdoc);
-      if (docsnap.exists) {
-        // write
-        transaction.update(userdoc, {'username': 'Abood'});
-      } else {
-        print('USer is not exists');
-      }
-
-      // end
-    });
-  }
-
-  // Batch write make it able to make operation in multple documant
-  var userdoc1 = FirebaseFirestore.instance
-      .collection('users')
-      .doc('YozUwHbAKNgc30yLEWDPMgbHIsx2');
-  var userdoc2 = FirebaseFirestore.instance
-      .collection('users')
-      .doc('doeaibZlpZTTOzk7e8Jwg3KHib92');
-
-  batchWrite() async {
-    var batch = FirebaseFirestore.instance.batch();
-    batch.delete(userdoc1);
-    batch.update(userdoc2, {'username': "mohammed"});
-    batch.commit();
-  }
-
-  // get data and stor in list to disply
-  // we can use list view bilder to show data
-  List userdata = [];
-  var datauser = FirebaseFirestore.instance
-      .collection('users')
-      .doc(FirebaseAuth.instance.currentUser!.uid);
-  getdataofuser() async {
-    var respnsebody = await datauser.get();
-    // setState(() {
-    //   userdata.add(respnsebody.data());
-    //   print('${userdata[0]['name']}');
-    // });
-  }
-
-  // @override
-  // void initState() {
-  //   getdataofuser();
-  //   // setdata();
-  //   // trans();
-  //   // getdata();
-  //   // realtimeget();
-  //   // Updata();
-  //   // delete();
-  //   // batchWrite();
-  //   super.initState();
-  // }
-
   @override
   Widget build(BuildContext context) {
     var radius = 30.0;
@@ -304,7 +177,7 @@ class Account_screen extends StatelessWidget {
                                     onPressed: () async {
                                       SaveController().deleatestorge();
                                       await controllerAuth.singout();
-                                      Get.off(() => login_screen());
+                                      Get.offAll(() => login_screen());
                                     },
                                     child: Text(
                                       'Logout',

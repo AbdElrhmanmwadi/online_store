@@ -107,8 +107,11 @@ class login_screen extends StatelessWidget {
                               Align(
                                 alignment: Alignment.centerRight,
                                 child: TextButton(
-                                    onPressed: () {},
-                                    child: Text('Forget password')),
+                                  onPressed: () {},
+                                  child: Text('Forget password'),
+                                  style: TextButton.styleFrom(
+                                      foregroundColor: redColor),
+                                ),
                               ),
                               controller.islodading.value
                                   ? CircularProgressIndicator(

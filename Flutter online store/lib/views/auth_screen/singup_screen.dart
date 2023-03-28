@@ -41,7 +41,7 @@ class _singup_screenState extends State<singup_screen> {
         gradient: const LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [Colors.white70, Colors.black54, Colors.white],
+          colors: [Colors.white70, Colors.white70, Colors.white],
           stops: [0.2, 0.4, 0.9],
         ),
       ),
@@ -138,11 +138,8 @@ class _singup_screenState extends State<singup_screen> {
                                 hinttext: '********',
                                 name_filed: 'Retype password',
                               ),
-                              Align(
-                                alignment: Alignment.centerRight,
-                                child: TextButton(
-                                    onPressed: () {},
-                                    child: Text('Forget password')),
+                              SizedBox(
+                                height: 7,
                               ),
                               Row(
                                 children: [
