@@ -1,4 +1,4 @@
-# emart_app
+# online store
 
 A new Flutter project.
 
